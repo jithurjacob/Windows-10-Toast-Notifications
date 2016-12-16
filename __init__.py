@@ -115,6 +115,20 @@ class ShowNotification(eg.ActionBase):
 	winballoon = WindowsBalloonTip()
 
 	def __call__(self):
-		print("Test notif")
-		self.winballoon.balloon_tip("Title", "msg")
+		self.winballoon.balloon_tip(title="Title", msg="msg")
 
+	def Configure(self, myString=""):
+		panel = eg.ConfigPanel()
+		editTextCtrl = wx.TextCtrl(panel, -1, myString)
+		panel.sizer.Add(editTextCtrl, 1, wx.EXPAND)
+
+
+		sizer = wx.GridBagSizer(3,0)
+		expand = wx.EXPAND
+		align = wx.ALIGN_CENTER_VERTICAL
+		sizer.AddMany([
+			(panel.StaticText("Message to display"), (0, 0), (1, 1), align),
+			(editTextCtrl, (1, 0), (1, 1), expand)])
+
+		while panel.Affirmed():
+			panel.SetResult(editTextCtrl.GetValue())
