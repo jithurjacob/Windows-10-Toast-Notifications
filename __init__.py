@@ -50,7 +50,7 @@ class WindowsBalloonTip:
         self.classAtom = RegisterClass(wc)		
 
     def balloon_tip(self, title="Notification", msg="Here comes the message",
-                    icon_path="python.ico", duration=5):
+                    icon_path="plugins\Win10Notifications\python.ico", duration=5):
         """Notification settings.
 
         :title: notification title
@@ -66,16 +66,14 @@ class WindowsBalloonTip:
         UpdateWindow(self.hwnd)
 
         # icon
-        icon_path = path.realpath(icon_path)
+        icon_path = path.abspath(icon_path)
         icon_flags = LR_LOADFROMFILE | LR_DEFAULTSIZE
         try:
             hicon = LoadImage(self.hinst, icon_path,
                               IMAGE_ICON, 0, 0, icon_flags)
         except Exception as e:
-        	print(icon_path)
-            logging.error("Some trouble with the icon ({}): {}"
-                          .format(icon_path, e))
-            hicon = LoadIcon(0, IDI_APPLICATION)
+        	logging.error("Some trouble with the icon ({0}): {1}".format(icon_path, e))
+        	hicon = LoadIcon(0, IDI_APPLICATION)
 
         # Taskbar icon
         flags = NIF_ICON | NIF_MESSAGE | NIF_TIP
