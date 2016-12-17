@@ -114,24 +114,32 @@ class ShowNotification(eg.ActionBase):
 	description = "Shows a Win10 style notification"
 	winballoon = WindowsBalloonTip()
 
-	def __call__(self):
-		self.winballoon.balloon_tip(title="Title", msg="msg")
+	def __call__(self, title, msg):
+		self.winballoon.balloon_tip(title, msg)
 
-	def Configure(self, myString=""):		
+	def Configure(self, 
+		title="EventGhost",
+		msg="No message"):		
 
 		panel = eg.ConfigPanel()
 
-		stText = wx.StaticText(panel, label="Message: ")
-		editTextCtrl = wx.TextCtrl(panel, -1, myString)
+		stTextTitle = wx.StaticText(panel, label="Title: ")
+		titleText = wx.TextCtrl(panel, -1)
+		stTextMsg = wx.StaticText(panel, label="Message: ")
+		msgText = wx.TextCtrl(panel, -1)
+
 		
 		sizer = wx.GridBagSizer(5,5)
 		sizer.AddMany([
-			(stText, (0,0), (1,1), wx.ALIGN_CENTER_VERTICAL),
-			(editTextCtrl, (0,1), (1,4), wx.ALIGN_CENTER_VERTICAL|wx.EXPAND)
+			(stTextTitle, (0,0), (1,1), wx.ALIGN_CENTER_VERTICAL),
+			(titleText, (0,1), (1,4), wx.ALIGN_CENTER_VERTICAL|wx.EXPAND),
+			(stTextMsg, (1,0), (1,1), wx.ALIGN_CENTER_VERTICAL),
+			(msgText, (1,1), (1,4), wx.ALIGN_CENTER_VERTICAL|wx.EXPAND)
 		])
 
 		sizer.AddGrowableCol(2)
 		panel.sizer.Add(sizer, 1, wx.EXPAND)
 
 		while panel.Affirmed():
-			panel.SetResult(editTextCtrl.GetValue())
+			panel.SetResult(titleText.GetValue(), msgText.GetValue())
+
