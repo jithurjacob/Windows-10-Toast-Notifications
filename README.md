@@ -1,3 +1,7 @@
+**FORK** 
+
+Forked to make an EventGhost plugin for Win10 Toast Notifications.
+
 # Windows-10-Toast-Notifications
 
 An easy-to-use Python library for displaying Windows 10 Toast Notifications which is useful for windows GUI development.
