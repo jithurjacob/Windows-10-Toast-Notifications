@@ -49,8 +49,8 @@ class WindowsBalloonTip:
 		wc.lpfnWndProc = message_map  # could also specify a wndproc.
 		self.classAtom = RegisterClass(wc)      
 
-	def balloon_tip(self, title="Notification", msg="Here comes the message",
-					icon_path="plugins\Win10Notifications\python.ico", duration=5):
+	def balloon_tip(self, title="Notification", msg="Here comes the message", duration=5,
+					icon_path="plugins\Win10Notifications\python.ico"):
 		"""Notification settings.
 
 		:title: notification title
@@ -106,7 +106,6 @@ class WindowsBalloonTip:
 class WindowsBalloonTip_EG(eg.PluginBase):
 
 	def __init__(self):
-		# Add EG action
 		self.AddAction(ShowNotification)
 
 class ShowNotification(eg.ActionBase):
@@ -114,32 +113,45 @@ class ShowNotification(eg.ActionBase):
 	description = "Shows a Win10 style notification"
 	winballoon = WindowsBalloonTip()
 
-	def __call__(self, title, msg):
-		self.winballoon.balloon_tip(title, msg)
+	def __call__(self, 
+		title="EventGhost", 
+		msg="No Message",
+		duration=3):
+
+		self.winballoon.balloon_tip(title, msg, duration)
 
 	def Configure(self, 
 		title="EventGhost",
-		msg="No message"):		
+		msg="No message",
+		duration=3):		
 
 		panel = eg.ConfigPanel()
 
 		stTextTitle = wx.StaticText(panel, label="Title: ")
 		titleText = wx.TextCtrl(panel, -1)
+
 		stTextMsg = wx.StaticText(panel, label="Message: ")
 		msgText = wx.TextCtrl(panel, -1)
 
+		stTextDuration = wx.StaticText(panel, label="Duration: ")
+		timeCtrl = wx.SpinCtrl(panel, duration)
+		timeCtrl.SetValue(3)
 		
 		sizer = wx.GridBagSizer(5,5)
 		sizer.AddMany([
 			(stTextTitle, (0,0), (1,1), wx.ALIGN_CENTER_VERTICAL),
 			(titleText, (0,1), (1,4), wx.ALIGN_CENTER_VERTICAL|wx.EXPAND),
 			(stTextMsg, (1,0), (1,1), wx.ALIGN_CENTER_VERTICAL),
-			(msgText, (1,1), (1,4), wx.ALIGN_CENTER_VERTICAL|wx.EXPAND)
+			(msgText, (1,1), (1,4), wx.ALIGN_CENTER_VERTICAL|wx.EXPAND),
+			(stTextDuration, (2,0), (1,1), wx.ALIGN_CENTER_VERTICAL),
+			(timeCtrl, (2,1), (1,4), wx.ALIGN_CENTER_VERTICAL|wx.EXPAND)
 		])
 
 		sizer.AddGrowableCol(2)
 		panel.sizer.Add(sizer, 1, wx.EXPAND)
 
 		while panel.Affirmed():
-			panel.SetResult(titleText.GetValue(), msgText.GetValue())
+			panel.SetResult(titleText.GetValue(), 
+				msgText.GetValue(),
+				timeCtrl.GetValue())
 
