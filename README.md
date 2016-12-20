@@ -2,7 +2,7 @@
 
 Forked to make codes installable by pip.
 
--Forked to make an EventGhost plugin for Win10 Toast Notifications.-
+~~Forked to make an EventGhost plugin for Win10 Toast Notifications.~~
 
 # Windows-10-Toast-Notifications
 
@@ -19,7 +19,7 @@ Just use pip like this.
 
 ```
 # pywin32 is required
-pip install https://github.com/sakurai-youhei/Windows-10-Toast-Notifications.git
+pip install git+https://github.com/sakurai-youhei/Windows-10-Toast-Notifications.git
 ```
 
 ### Installation of pywin32
