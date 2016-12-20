@@ -1,8 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-from __future__ import (absolute_import, print_function, unicode_literals)
+from __future__ import absolute_import
+from __future__ import print_function
+from __future__ import unicode_literals
 
-# ##############################################################################
+# #############################################################################
 # ########## Libraries #############
 # ##################################
 # standard library
@@ -11,21 +13,39 @@ from os import path
 from time import sleep
 
 # 3rd party modules
-from win32api import GetModuleHandle, PostQuitMessage
-from win32con import CW_USEDEFAULT, IMAGE_ICON, IDI_APPLICATION,\
-                     LR_DEFAULTSIZE, LR_LOADFROMFILE,\
-                     WM_DESTROY, WS_OVERLAPPED, WS_SYSMENU, WM_USER
-from win32gui import CreateWindow, DestroyWindow, LoadIcon, LoadImage,\
-                     NIF_ICON, NIF_INFO, NIF_MESSAGE, NIF_TIP,\
-                     NIM_ADD, NIM_DELETE, NIM_MODIFY,\
-                     RegisterClass, Shell_NotifyIcon, UpdateWindow, WNDCLASS
+from win32api import GetModuleHandle
+from win32api import PostQuitMessage
+from win32con import CW_USEDEFAULT
+from win32con import IDI_APPLICATION
+from win32con import IMAGE_ICON
+from win32con import LR_DEFAULTSIZE
+from win32con import LR_LOADFROMFILE
+from win32con import WM_DESTROY
+from win32con import WM_USER
+from win32con import WS_OVERLAPPED
+from win32con import WS_SYSMENU
+from win32gui import CreateWindow
+from win32gui import DestroyWindow
+from win32gui import LoadIcon
+from win32gui import LoadImage
+from win32gui import NIF_ICON
+from win32gui import NIF_INFO
+from win32gui import NIF_MESSAGE
+from win32gui import NIF_TIP
+from win32gui import NIM_ADD
+from win32gui import NIM_DELETE
+from win32gui import NIM_MODIFY
+from win32gui import RegisterClass
+from win32gui import Shell_NotifyIcon
+from win32gui import UpdateWindow
+from win32gui import WNDCLASS
 
 # ############################################################################
 # ########### Classes ##############
 # ##################################
 
 
-class WindowsBalloonTip:
+class WindowsBalloonTip(object):
     """Create a Windows 10 notification balloon.
 
     from: https://github.com/jithurjacob/Windows-10-Toast-Notifications
@@ -96,7 +116,7 @@ class WindowsBalloonTip:
 
         return None
 
-# ###############################################################################
+# #############################################################################
 # ###### Stand alone program ########
 # ###################################
 if __name__ == "__main__":
@@ -106,6 +126,8 @@ if __name__ == "__main__":
                   "Python is 10 seconds awsm!",
                   icon_path="python.ico",
                   duration=10)
-    w.balloon_tip("Example two",
-                  "Once you start coding in Python you'll hate other languages",
-                  icon_path="python.ico")
+    w.balloon_tip(
+        "Example two",
+        "Once you start coding in Python you'll hate other languages",
+        icon_path="python.ico"
+    )

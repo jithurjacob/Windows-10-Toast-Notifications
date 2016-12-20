@@ -1,6 +1,8 @@
 **FORK** 
 
-Forked to make an EventGhost plugin for Win10 Toast Notifications.
+Forked to make codes installable by pip.
+
+-Forked to make an EventGhost plugin for Win10 Toast Notifications.-
 
 # Windows-10-Toast-Notifications
 
@@ -11,3 +13,26 @@ An easy-to-use Python library for displaying Windows 10 Toast Notifications whic
 
 --
 
+## Installation
+
+Just use pip like this.
+
+```
+# pywin32 is required
+pip install https://github.com/sakurai-youhei/Windows-10-Toast-Notifications.git
+```
+
+### Installation of pywin32
+
+Easiest way to install pywin32 is using executable installer published at https://sourceforge.net/projects/pywin32/files/pywin32/.
+
+## Example
+
+```
+from win10toast import WindowsBalloonTip
+w = WindowsBalloonTip()
+w.balloon_tip("Example one",
+              "Python is 10 seconds awsm!",
+              icon_path="python.ico",
+              duration=10)
+```
