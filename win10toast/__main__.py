@@ -9,6 +9,8 @@ from __future__ import unicode_literals
 import logging
 from os import path
 from time import sleep
+from pkg_resources import Requirement
+from pkg_resources import resource_filename
 
 # 3rd party modules
 from win32api import GetModuleHandle
@@ -77,7 +79,10 @@ class ToastNotifier(object):
         UpdateWindow(self.hwnd)
 
         # icon
-        icon_path = path.realpath(icon_path)
+        if icon_path is not None:
+            icon_path = path.realpath(icon_path)
+        else:
+            icon_path =  resource_filename(Requirement.parse("win10toast"), "win10toast/data/python.ico")
         icon_flags = LR_LOADFROMFILE | LR_DEFAULTSIZE
         try:
             hicon = LoadImage(self.hinst, icon_path,

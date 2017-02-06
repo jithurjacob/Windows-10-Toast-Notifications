@@ -30,6 +30,11 @@ setup(
         "An easy-to-use Python library for displaying "
         "Windows 10 Toast Notifications"
     ),
+    include_package_data=True,
+    package_data={
+        '': ['*.txt'],
+        'win10toast': ['data/*.ico'],
+    },
     long_description=read('README.md'),
     author="Jithu R Jacob",
     author_email="jithurjacob@gmail.com",
