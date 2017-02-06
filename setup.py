@@ -38,8 +38,6 @@ setup(
     long_description=read('README.md'),
     author="Jithu R Jacob",
     author_email="jithurjacob@gmail.com",
-    maintainer="Youhei Sakurai",
-    maintainer_email="sakurai.youhei@gmail.com",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Topic :: Utilities",
