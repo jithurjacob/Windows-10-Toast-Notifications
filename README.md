@@ -11,13 +11,18 @@ An easy-to-use Python library for displaying Windows 10 Toast Notifications whic
 ## Installation
 
 ```
-# pywin32 is required
 pip install win10toast
 ```
 
-### Installation of pywin32
+## Requirements
 
-Easiest way to install pywin32 is using executable installer published at https://sourceforge.net/projects/pywin32/files/pywin32/.
+### Installation of pywin32
+```
+pywin32
+setuptools
+```
+
+Easiest way to install pywin32 is using executable installer published at [https://sourceforge.net/projects/pywin32/files/pywin32/](https://sourceforge.net/projects/pywin32/files/pywin32/)
 
 ## Example
 
