@@ -20,12 +20,12 @@ requirements_txt = list(map(str, map(
 
 setup(
     name="win10toast",
-    version="0.2",
+    version="0.3",
     install_requires=requirements_txt,
     packages=["win10toast"],
     license="BSD",
     url="https://github.com/jithurjacob/Windows-10-Toast-Notifications",
-    download_url = 'https://github.com/jithurjacob/Windows-10-Toast-Notifications/tarball/0.1',
+    download_url = 'https://github.com/jithurjacob/Windows-10-Toast-Notifications/tarball/0.3',
     description=(
         "An easy-to-use Python library for displaying "
         "Windows 10 Toast Notifications"
