@@ -18,7 +18,7 @@ pip install win10toast
 
 ### Installation of pywin32
 ```
-pywin32
+pypiwin32
 setuptools
 ```
 
