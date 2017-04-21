@@ -18,11 +18,9 @@ pip install win10toast
 
 ### Installation of pywin32
 ```
-pywin32
+pypiwin32
 setuptools
 ```
-
-Easiest way to install pywin32 is using executable installer published at [https://sourceforge.net/projects/pywin32/files/pywin32/](https://sourceforge.net/projects/pywin32/files/pywin32/)
 
 ## Example
 
