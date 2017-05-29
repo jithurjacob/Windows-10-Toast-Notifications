@@ -38,6 +38,7 @@ from win32gui import NIM_ADD
 from win32gui import NIM_DELETE
 from win32gui import NIM_MODIFY
 from win32gui import RegisterClass
+from win32gui import UnregisterClass
 from win32gui import Shell_NotifyIcon
 from win32gui import UpdateWindow
 from win32gui import WNDCLASS
@@ -53,16 +54,19 @@ class ToastNotifier(object):
     from: https://github.com/jithurjacob/Windows-10-Toast-Notifications
     """
 
-    def __init__(self):
-        """Initialize."""
-        message_map = {WM_DESTROY: self.on_destroy, }
+    # def __init__(self):
+    #     """Initialize."""
+        # message_map = {WM_DESTROY: self.on_destroy, }
 
-        # Register the window class.
-        wc = WNDCLASS()
-        self.hinst = wc.hInstance = GetModuleHandle(None)
-        wc.lpszClassName = str("PythonTaskbar")  # must be a string
-        wc.lpfnWndProc = message_map  # could also specify a wndproc.
-        self.classAtom = RegisterClass(wc)
+        # # Register the window class.
+        # self.wc = WNDCLASS()
+        # self.hinst = self.wc.hInstance = GetModuleHandle(None)
+        # self.wc.lpszClassName = str("PythonTaskbar")  # must be a string
+        # self.wc.lpfnWndProc = message_map  # could also specify a wndproc.
+        # try:
+        #     self.classAtom = RegisterClass(self.wc)
+        # except:
+        #     pass #not sure of this
 
     def show_toast(self, title="Notification", msg="Here comes the message",
                     icon_path=None, duration=5):
@@ -73,6 +77,17 @@ class ToastNotifier(object):
         :icon_path: path to the .ico file to custom notification
         :duration: delay in seconds before notification self-destruction
         """
+        message_map = {WM_DESTROY: self.on_destroy, }
+
+        # Register the window class.
+        self.wc = WNDCLASS()
+        self.hinst = self.wc.hInstance = GetModuleHandle(None)
+        self.wc.lpszClassName = str("PythonTaskbar")  # must be a string
+        self.wc.lpfnWndProc = message_map  # could also specify a wndproc.
+        try:
+            self.classAtom = RegisterClass(self.wc)
+        except:
+            pass #not sure of this
         style = WS_OVERLAPPED | WS_SYSMENU
         self.hwnd = CreateWindow(self.classAtom, "Taskbar", style,
                                  0, 0, CW_USEDEFAULT,
@@ -105,6 +120,7 @@ class ToastNotifier(object):
         # take a rest then destroy
         sleep(duration)
         DestroyWindow(self.hwnd)
+        UnregisterClass(self.wc.lpszClassName, None)
         return None
 
     def on_destroy(self, hwnd, msg, wparam, lparam):

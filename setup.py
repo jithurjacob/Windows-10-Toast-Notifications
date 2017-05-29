@@ -20,7 +20,7 @@ requirements_txt = list(map(str, map(
 
 setup(
     name="win10toast",
-    version="0.4",
+    version="0.8",
     install_requires=requirements_txt,
     packages=["win10toast"],
     license="BSD",
