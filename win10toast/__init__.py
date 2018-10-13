@@ -77,8 +77,8 @@ class ToastNotifier(object):
         self.wc.lpfnWndProc = message_map  # could also specify a wndproc.
         try:
             self.classAtom = RegisterClass(self.wc)
-        except:
-            pass #not sure of this
+        except Exception as e:
+            logging.error("Some trouble with classAtom ({})".format(e))
         style = WS_OVERLAPPED | WS_SYSMENU
         self.hwnd = CreateWindow(self.classAtom, "Taskbar", style,
                                  0, 0, CW_USEDEFAULT,
