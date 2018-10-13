@@ -94,8 +94,13 @@ class ToastNotifier(object):
         self.wc.lpfnWndProc = self._decorator(self.wnd_proc, callback_on_click)  # could instead specify simple mapping
         try:
             self.classAtom = RegisterClass(self.wc)
+<<<<<<< HEAD
         except (TypeError, Exception):
             pass  # not sure of this
+=======
+        except Exception as e:
+            logging.error("Some trouble with classAtom ({})".format(e))
+>>>>>>> f1db5b2... https://github.com/jithurjacob/Windows-10-Toast-Notifications/issues/33 added logging to classAtom
         style = WS_OVERLAPPED | WS_SYSMENU
         self.hwnd = CreateWindow(self.classAtom, "Taskbar", style,
                                  0, 0, CW_USEDEFAULT,
