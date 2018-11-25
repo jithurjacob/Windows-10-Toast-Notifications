@@ -40,6 +40,12 @@ toaster.show_toast("Example two",
 while toaster.notification_active(): time.sleep(0.1)
 ```
 
+## Compatibility with other Windows OSe
+
+The library also works with nonWin10-OSes, so feel free to use it on Windows 7 as well...
+
+![Win7img](http://justpic.info/images4/8f3b/2018112513_25_30computerhpTightVNCViewer.png)
+
 ## Contributors [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/jithurjacob/Windows-10-Toast-Notifications/issues)
 
 + [sidc9](https://github.com/sidc9)
