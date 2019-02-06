@@ -1,2 +1,2 @@
-pypiwin32
+pywin32
 setuptools
