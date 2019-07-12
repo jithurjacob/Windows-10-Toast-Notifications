@@ -84,7 +84,7 @@ class ToastNotifier(object):
         :title: notification title
         :msg: notification message
         :icon_path: path to the .ico file to custom notification
-        :duration: delay in seconds before notification self-destruction
+        :duration: delay in seconds before notification self-destruction, None for no-self-destruction
         """
 
         # Register the window class.
@@ -127,9 +127,10 @@ class ToastNotifier(object):
                                       title))
         PumpMessages()
         # take a rest then destroy
-        sleep(duration)
-        DestroyWindow(self.hwnd)
-        UnregisterClass(self.wc.lpszClassName, None)
+        if duration is not None:
+            sleep(duration)
+            DestroyWindow(self.hwnd)
+            UnregisterClass(self.wc.lpszClassName, None)
         return None
 
     def show_toast(self, title="Notification", msg="Here comes the message",
@@ -139,7 +140,7 @@ class ToastNotifier(object):
         :title: notification title
         :msg: notification message
         :icon_path: path to the .ico file to custom notification
-        :duration: delay in seconds before notification self-destruction
+        :duration: delay in seconds before notification self-destruction, None for no-self-destruction
         """
         if not threaded:
             self._show_toast(title, msg, icon_path, duration, callback_on_click)
