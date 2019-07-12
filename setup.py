@@ -1,9 +1,13 @@
 
 from operator import attrgetter
 from os import path
+from setuptools import setup pi
 
-from pip.req import parse_requirements
-from setuptools import setup
+try: # for pip >= 10
+    from pip._internal.req import parse_requirements
+except ImportError: # for pip <= 9.0.3
+    from pip.req import parse_requirements
+
 
 def read(fname):
     return open(path.join(path.dirname(__file__), fname)).read()
