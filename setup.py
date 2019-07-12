@@ -1,7 +1,7 @@
 
 from operator import attrgetter
 from os import path
-from setuptools import setup pi
+from setuptools import setup
 
 try: # for pip >= 10
     from pip._internal.req import parse_requirements
