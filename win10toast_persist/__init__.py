@@ -122,7 +122,7 @@ class ToastNotifier(object):
         :msg: notification message
         :icon_path: path to the .ico file to custom notification
         :duration: delay in seconds before notification self-destruction, None for no-self-destruction
-        
+
         """
         if not threaded:
             self._show_toast(title, msg, icon_path, duration)

@@ -36,7 +36,7 @@ setup(
     },
     long_description=read('README.md'),
     author="Jithu R. Jacob and Tyler N. Thieding",
-    author_email="jithurjacob@gmail.com and python@thieding.com",
+    author_email="python@thieding.com",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Topic :: Utilities",
