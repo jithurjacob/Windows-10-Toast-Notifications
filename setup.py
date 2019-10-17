@@ -34,7 +34,7 @@ setup(
         '': ['*.txt'],
         'win10toast_persist': ['data/*.ico'],
     },
-    long_description=read('README.md'),
+    long_description=read('README.rst'),
     author="Jithu R. Jacob and Tyler N. Thieding",
     author_email="python@thieding.com",
     classifiers=[
