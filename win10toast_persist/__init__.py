@@ -66,7 +66,8 @@ class ToastNotifier(object):
         :title: notification title
         :msg: notification message
         :icon_path: path to the .ico file to custom notification
-        :duration: delay in seconds before notification self-destruction
+        :duration: delay in seconds before notification self-destruction, None for no-self-destruction
+
         """
         message_map = {WM_DESTROY: self.on_destroy, }
 
@@ -90,7 +91,7 @@ class ToastNotifier(object):
         if icon_path is not None:
             icon_path = path.realpath(icon_path)
         else:
-            icon_path =  resource_filename(Requirement.parse("win10toast"), "win10toast/data/python.ico")
+            icon_path =  resource_filename(Requirement.parse("win10toast_persist"), "win10toast_persist/data/python.ico")
         icon_flags = LR_LOADFROMFILE | LR_DEFAULTSIZE
         try:
             hicon = LoadImage(self.hinst, icon_path,
@@ -108,11 +109,10 @@ class ToastNotifier(object):
                                       WM_USER + 20,
                                       hicon, "Balloon Tooltip", msg, 200,
                                       title))
-        # take a rest then destroy
-        sleep(duration)
-        DestroyWindow(self.hwnd)
-        UnregisterClass(self.wc.lpszClassName, None)
-        return None
+        if duration is not None:
+            sleep(duration)
+            DestroyWindow(self.hwnd)
+            UnregisterClass(self.wc.lpszClassName, None)
 
     def show_toast(self, title="Notification", msg="Here comes the message",
                     icon_path=None, duration=5, threaded=False):
@@ -121,7 +121,8 @@ class ToastNotifier(object):
         :title: notification title
         :msg: notification message
         :icon_path: path to the .ico file to custom notification
-        :duration: delay in seconds before notification self-destruction
+        :duration: delay in seconds before notification self-destruction, None for no-self-destruction
+        
         """
         if not threaded:
             self._show_toast(title, msg, icon_path, duration)

@@ -1,16 +1,16 @@
 # Windows 10 Toast Notifications
-[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)  [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fjithurjacob%2FWindows-10-Toast-Notifications.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fjithurjacob%2FWindows-10-Toast-Notifications?ref=badge_shield) [![HitCount](http://hits.dwyl.io/jithurjacob/Windows-10-Toast-Notifications.svg)](http://hits.dwyl.io/jithurjacob/Windows-10-Toast-Notifications) [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
-An easy-to-use Python library for displaying Windows 10 Toast Notifications which is useful for Windows GUI development.
+Fork of https://github.com/jithurjacob/Windows-10-Toast-Notifications.
 
+An easy-to-use Python library for displaying Windows 10 Toast Notifications with support for notifications that persist
+in the notification center.
 
-![o7ja4 1](https://cloud.githubusercontent.com/assets/7101452/19763806/75f71ba4-9c5d-11e6-9f16-d0d4bf43e63e.png)
-
+Update original package's interface to support persistent notifications by passing ``duration=None``.
 
 ## Installation
 
 ```
-pip install win10toast
+pip install win10toast-persist
 ```
 
 ## Requirements
@@ -24,7 +24,7 @@ setuptools
 ## Example
 
 ```
-from win10toast import ToastNotifier
+from win10toast_persist import ToastNotifier
 toaster = ToastNotifier()
 toaster.show_toast("Hello World!!!",
                    "Python is 10 seconds awsm!",
