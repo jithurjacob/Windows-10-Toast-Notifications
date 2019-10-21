@@ -15,7 +15,7 @@ def from_here(relative_path):
 
 setup(
     name="win10toast-persist",
-    version="0.10",
+    version="0.10.1",
     install_requires=[
         "pypiwin32",
         "setuptools"

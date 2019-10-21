@@ -10,6 +10,7 @@ __all__ = ['ToastNotifier']
 # standard library
 import logging
 import threading
+import time
 from os import path
 from time import sleep
 from pkg_resources import Requirement
@@ -74,7 +75,7 @@ class ToastNotifier(object):
         # Register the window class.
         self.wc = WNDCLASS()
         self.hinst = self.wc.hInstance = GetModuleHandle(None)
-        self.wc.lpszClassName = str("PythonTaskbar")  # must be a string
+        self.wc.lpszClassName = str("PythonTaskbar" + str(time.time()).replace('.', ''))  # must be a string
         self.wc.lpfnWndProc = message_map  # could also specify a wndproc.
         try:
             self.classAtom = RegisterClass(self.wc)
