@@ -10,7 +10,7 @@ __all__ = ['ToastNotifier']
 # standard library
 import logging
 import threading
-from os import path
+from os import path, remove
 from time import sleep
 from pkg_resources import Requirement
 from pkg_resources import resource_filename
@@ -43,6 +43,7 @@ from win32gui import UnregisterClass
 from win32gui import Shell_NotifyIcon
 from win32gui import UpdateWindow
 from win32gui import WNDCLASS
+from PIL import Image
 
 # ############################################################################
 # ########### Classes ##############
@@ -89,12 +90,21 @@ class ToastNotifier(object):
         # icon
         if icon_path is not None:
             icon_path = path.realpath(icon_path)
+            if icon_path.split('.')[-1] != '.ico':
+                img = Image.open(icon_path)
+                new_name = icon_path.split('.')[:-1] + '.ico'
+                img.save(new_name)
+                icon_path = new_name
+                converted = True
         else:
             icon_path =  resource_filename(Requirement.parse("win10toast"), "win10toast/data/python.ico")
+            converted = False
         icon_flags = LR_LOADFROMFILE | LR_DEFAULTSIZE
         try:
             hicon = LoadImage(self.hinst, icon_path,
                               IMAGE_ICON, 0, 0, icon_flags)
+            if path.exists(new_name and converted):
+                remove(new_name)
         except Exception as e:
             logging.error("Some trouble with the icon ({}): {}"
                           .format(icon_path, e))
