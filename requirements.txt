@@ -1,3 +1,2 @@
 pypiwin32
 setuptools
-Pillow
