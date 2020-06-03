@@ -55,9 +55,15 @@ class ToastNotifier(object):
     from: https://github.com/jithurjacob/Windows-10-Toast-Notifications
     """
 
-    def __init__(self):
+    def __init__(self, auto_destroy=True):
         """Initialize."""
         self._thread = None
+        self.wc = WNDCLASS()
+        self.hinst = self.wc.hInstance = GetModuleHandle(None)
+        self.wc.lpszClassName = str("PythonTaskbar")  # must be a string
+        if auto_destroy:
+            # could also specify a wndproc.
+            self.wc.lpfnWndProc = {WM_DESTROY: self.on_destroy, }
 
     def _show_toast(self, title, msg,
                     icon_path, duration):
@@ -68,17 +74,12 @@ class ToastNotifier(object):
         :icon_path: path to the .ico file to custom notification
         :duration: delay in seconds before notification self-destruction
         """
-        message_map = {WM_DESTROY: self.on_destroy, }
 
         # Register the window class.
-        self.wc = WNDCLASS()
-        self.hinst = self.wc.hInstance = GetModuleHandle(None)
-        self.wc.lpszClassName = str("PythonTaskbar")  # must be a string
-        self.wc.lpfnWndProc = message_map  # could also specify a wndproc.
         try:
             self.classAtom = RegisterClass(self.wc)
         except:
-            pass #not sure of this
+            pass  # not sure of this
         style = WS_OVERLAPPED | WS_SYSMENU
         self.hwnd = CreateWindow(self.classAtom, "Taskbar", style,
                                  0, 0, CW_USEDEFAULT,
@@ -90,7 +91,8 @@ class ToastNotifier(object):
         if icon_path is not None:
             icon_path = path.realpath(icon_path)
         else:
-            icon_path =  resource_filename(Requirement.parse("win10toast"), "win10toast/data/python.ico")
+            icon_path =  resource_filename(Requirement.parse("win10toast"),
+                                           "win10toast/data/python.ico")
         icon_flags = LR_LOADFROMFILE | LR_DEFAULTSIZE
         try:
             hicon = LoadImage(self.hinst, icon_path,
