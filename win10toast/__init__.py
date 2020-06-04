@@ -8,6 +8,7 @@ __all__ = ['ToastNotifier']
 # ########## Libraries #############
 # ##################################
 # standard library
+import webbrowser
 import logging
 import threading
 from os import path
@@ -60,7 +61,7 @@ class ToastNotifier(object):
         self._thread = None
 
     def _show_toast(self, title, msg,
-                    icon_path, duration):
+                    icon_path, duration, url):
         """Notification settings.
 
         :title: notification title
@@ -110,12 +111,13 @@ class ToastNotifier(object):
                                       title))
         # take a rest then destroy
         sleep(duration)
+        if url != None: webbrowser.open(url)
         DestroyWindow(self.hwnd)
         UnregisterClass(self.wc.lpszClassName, None)
         return None
 
     def show_toast(self, title="Notification", msg="Here comes the message",
-                    icon_path=None, duration=5, threaded=False):
+                    icon_path=None, duration=5, threaded=False, url=None):
         """Notification settings.
 
         :title: notification title
@@ -124,13 +126,13 @@ class ToastNotifier(object):
         :duration: delay in seconds before notification self-destruction
         """
         if not threaded:
-            self._show_toast(title, msg, icon_path, duration)
+            self._show_toast(title, msg, icon_path, duration, url)
         else:
             if self.notification_active():
                 # We have an active notification, let is finish so we don't spam them
                 return False
 
-            self._thread = threading.Thread(target=self._show_toast, args=(title, msg, icon_path, duration))
+            self._thread = threading.Thread(target=self._show_toast, args=(title, msg, icon_path, duration, url))
             self._thread.start()
         return True
 
