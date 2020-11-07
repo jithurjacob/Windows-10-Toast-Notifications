@@ -2,8 +2,8 @@
 from operator import attrgetter
 from os import path
 
-from pip.req import parse_requirements
 from setuptools import setup
+
 
 def read(fname):
     return open(path.join(path.dirname(__file__), fname)).read()
@@ -13,31 +13,30 @@ def from_here(relative_path):
     return path.join(path.dirname(__file__), relative_path)
 
 
-requirements_txt = list(map(str, map(
-    attrgetter("req"),
-    parse_requirements(from_here("requirements.txt"), session="")
-)))
-
 setup(
-    name="win10toast",
-    version="0.9",
-    install_requires=requirements_txt,
-    packages=["win10toast"],
+    name="win10toast-persist",
+    version="0.10.1",
+    install_requires=[
+        "pypiwin32",
+        "setuptools"
+    ],
+    packages=["win10toast_persist"],
     license="BSD",
-    url="https://github.com/jithurjacob/Windows-10-Toast-Notifications",
-    download_url = 'https://github.com/jithurjacob/Windows-10-Toast-Notifications/tarball/0.9',
+    url="https://github.com/tnthieding/Windows-10-Toast-Notifications",
+    download_url='',
     description=(
         "An easy-to-use Python library for displaying "
-        "Windows 10 Toast Notifications"
+        "Windows 10 Toast Notifications with support for "
+        "persisting notifications."
     ),
     include_package_data=True,
     package_data={
         '': ['*.txt'],
-        'win10toast': ['data/*.ico'],
+        'win10toast_persist': ['data/*.ico'],
     },
-    long_description=read('README.md'),
-    author="Jithu R Jacob",
-    author_email="jithurjacob@gmail.com",
+    long_description=read('README.rst'),
+    author="Jithu R. Jacob and Tyler N. Thieding",
+    author_email="python@thieding.com",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Topic :: Utilities",

@@ -1,4 +1,4 @@
-from win10toast import ToastNotifier
+from win10toast_persist import ToastNotifier
 
 if __name__ == "__main__":
     # Example
