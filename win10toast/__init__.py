@@ -115,7 +115,7 @@ class ToastNotifier(object):
         return None
 
     def show_toast(self, title="Notification", msg="Here comes the message",
-                    icon_path=None, duration=5, threaded=False):
+                    icon_path=None, duration=5, threaded=True):
         """Notification settings.
 
         :title: notification title
