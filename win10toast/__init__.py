@@ -127,7 +127,7 @@ class ToastNotifier(object):
             self._show_toast(title, msg, icon_path, duration)
         else:
             if self.notification_active():
-                # We have an active notification, let is finish so we don't spam them
+                # We have an active notification, let it finish so we don't spam them
                 return False
 
             self._thread = threading.Thread(target=self._show_toast, args=(title, msg, icon_path, duration))
@@ -137,7 +137,7 @@ class ToastNotifier(object):
     def notification_active(self):
         """See if we have an active notification showing"""
         if self._thread != None and self._thread.is_alive():
-            # We have an active notification, let is finish we don't spam them
+            # We have an active notification, let it finish we don't spam them
             return True
         return False
 
