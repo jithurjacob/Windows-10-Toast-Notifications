@@ -55,9 +55,10 @@ class ToastNotifier(object):
     from: https://github.com/jithurjacob/Windows-10-Toast-Notifications
     """
 
-    def __init__(self):
+    def __init__(self, application_name = None):
         """Initialize."""
         self._thread = None
+        self.application_name = application_name or "Tooltip"
 
     def _show_toast(self, title, msg,
                     icon_path, duration):
@@ -102,7 +103,7 @@ class ToastNotifier(object):
 
         # Taskbar icon
         flags = NIF_ICON | NIF_MESSAGE | NIF_TIP
-        nid = (self.hwnd, 0, flags, WM_USER + 20, hicon, "Tooltip")
+        nid = (self.hwnd, 0, flags, WM_USER + 20, hicon, self.application_name)
         Shell_NotifyIcon(NIM_ADD, nid)
         Shell_NotifyIcon(NIM_MODIFY, (self.hwnd, 0, NIF_INFO,
                                       WM_USER + 20,
