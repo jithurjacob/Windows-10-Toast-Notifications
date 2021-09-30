@@ -36,6 +36,7 @@ setup(
         'win10toast': ['data/*.ico'],
     },
     long_description=read('README.md'),
+    long_description_content_type="text/markdown",
     author="Jithu R Jacob",
     author_email="jithurjacob@gmail.com",
     classifiers=[
