@@ -10,6 +10,8 @@ if __name__ == "__main__":
     toaster.show_toast(
         "Hello World!!!",
         "Python is 10 seconds awsm!",
+        "Adding branch-1 changes",
+        "Doing merge conflict related work",
         duration=10)
     toaster.show_toast(
         "Example two",
