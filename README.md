@@ -10,6 +10,10 @@ Changing readme file for completing git assignment!!
 
 ## Installation Performing merge conflict activity
 ## Assignment done by Aarushi
+## Installation, Performing merge conflict activity,
+## Assigment Done by Manju Latha
+## Installation Lavanya Git merge and conflict changes
+## 2021HT66032- Lavanya S
 
 ```
 pip install win10toast
