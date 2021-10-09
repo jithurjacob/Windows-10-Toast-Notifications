@@ -8,6 +8,8 @@ Changing readme file for completing git assignment!!
 ![o7ja4 1](https://cloud.githubusercontent.com/assets/7101452/19763806/75f71ba4-9c5d-11e6-9f16-d0d4bf43e63e.png)
 
 
+## Installation Performing merge conflict activity
+## Assignment done by Aarushi
 ## Installation, Performing merge conflict activity,
 ## Assigment Done by Manju Latha
 ## Installation Lavanya Git merge and conflict changes
