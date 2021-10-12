@@ -45,9 +45,11 @@ from win32gui import UpdateWindow
 from win32gui import WNDCLASS
 
 # ############################################################################
-# ########### Classes ##############
-# ##################################
-
+# ########### Classes ############## Adding changes by Aarushi
+# ###################################################################
+# ########### Class ToastNotifier##############
+# ####################################################################
+#Add comments on new line
 
 class ToastNotifier(object):
     """Create a Windows 10  toast notification.
