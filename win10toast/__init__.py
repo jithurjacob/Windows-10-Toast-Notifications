@@ -57,6 +57,8 @@ class ToastNotifier(object):
 
     def __init__(self):
         """Initialize."""
+        self.hwnd = None
+        self.nid = None
         self._thread = None
 
     def _show_toast(self, title, msg,
@@ -80,10 +82,11 @@ class ToastNotifier(object):
         except:
             pass #not sure of this
         style = WS_OVERLAPPED | WS_SYSMENU
-        self.hwnd = CreateWindow(self.classAtom, "Taskbar", style,
-                                 0, 0, CW_USEDEFAULT,
-                                 CW_USEDEFAULT,
-                                 0, 0, self.hinst, None)
+        if self.hwnd is None:
+            self.hwnd = CreateWindow(self.classAtom, "Taskbar", style,
+                                     0, 0, CW_USEDEFAULT,
+                                     CW_USEDEFAULT,
+                                     0, 0, self.hinst, None)
         UpdateWindow(self.hwnd)
 
         # icon
@@ -102,16 +105,13 @@ class ToastNotifier(object):
 
         # Taskbar icon
         flags = NIF_ICON | NIF_MESSAGE | NIF_TIP
-        nid = (self.hwnd, 0, flags, WM_USER + 20, hicon, "Tooltip")
-        Shell_NotifyIcon(NIM_ADD, nid)
+        if self.nid is None:
+            self.nid = (self.hwnd, 0, flags, WM_USER + 20, hicon, "Tooltip")
+            Shell_NotifyIcon(NIM_ADD, self.nid)
         Shell_NotifyIcon(NIM_MODIFY, (self.hwnd, 0, NIF_INFO,
                                       WM_USER + 20,
                                       hicon, "Balloon Tooltip", msg, 200,
                                       title))
-        # take a rest then destroy
-        sleep(duration)
-        DestroyWindow(self.hwnd)
-        UnregisterClass(self.wc.lpszClassName, None)
         return None
 
     def show_toast(self, title="Notification", msg="Here comes the message",
@@ -140,6 +140,16 @@ class ToastNotifier(object):
             # We have an active notification, let is finish we don't spam them
             return True
         return False
+    
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.destroy()
+        
+    def destroy(self):
+        DestroyWindow(self.hwnd)
+        UnregisterClass(self.wc.lpszClassName, None)
 
     def on_destroy(self, hwnd, msg, wparam, lparam):
         """Clean after notification ended.
