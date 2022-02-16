@@ -152,6 +152,11 @@ class ToastNotifier(object):
     def destroy(self):
         DestroyWindow(self.hwnd)
         UnregisterClass(self.wc.lpszClassName, None)
+        self.hwnd = None
+        self.nid = None
+        self._thread = None
+        self.wc = None
+        self.hicon = None
 
     def on_destroy(self, hwnd, msg, wparam, lparam):
         """Clean after notification ended.
