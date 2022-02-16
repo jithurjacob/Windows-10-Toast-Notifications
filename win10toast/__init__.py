@@ -44,6 +44,7 @@ from win32gui import Shell_NotifyIcon
 from win32gui import UpdateWindow
 from win32gui import WNDCLASS
 
+
 # ############################################################################
 # ########### Classes ##############
 # ##################################
@@ -51,7 +52,6 @@ from win32gui import WNDCLASS
 
 class ToastNotifier(object):
     """Create a Windows 10  toast notification.
-
     from: https://github.com/jithurjacob/Windows-10-Toast-Notifications
     """
 
@@ -60,11 +60,12 @@ class ToastNotifier(object):
         self.hwnd = None
         self.nid = None
         self._thread = None
+        self.wc = None
+        self.hicon = None
 
     def _show_toast(self, title, msg,
                     icon_path, duration):
         """Notification settings.
-
         :title: notification title
         :msg: notification message
         :icon_path: path to the .ico file to custom notification
@@ -73,51 +74,52 @@ class ToastNotifier(object):
         message_map = {WM_DESTROY: self.on_destroy, }
 
         # Register the window class.
-        self.wc = WNDCLASS()
-        self.hinst = self.wc.hInstance = GetModuleHandle(None)
-        self.wc.lpszClassName = str("PythonTaskbar")  # must be a string
-        self.wc.lpfnWndProc = message_map  # could also specify a wndproc.
-        try:
-            self.classAtom = RegisterClass(self.wc)
-        except:
-            pass #not sure of this
-        style = WS_OVERLAPPED | WS_SYSMENU
-        if self.hwnd is None:
-            self.hwnd = CreateWindow(self.classAtom, "Taskbar", style,
-                                     0, 0, CW_USEDEFAULT,
-                                     CW_USEDEFAULT,
-                                     0, 0, self.hinst, None)
+        if self.wc is None:
+            self.wc = WNDCLASS()
+            self.hinst = self.wc.hInstance = GetModuleHandle(None)
+            self.wc.lpszClassName = str("PythonTaskbar")  # must be a string
+            self.wc.lpfnWndProc = message_map  # could also specify a wndproc.
+            try:
+                self.classAtom = RegisterClass(self.wc)
+            except:
+                pass  # not sure of this
+            style = WS_OVERLAPPED | WS_SYSMENU
+            if self.hwnd is None:
+                self.hwnd = CreateWindow(self.classAtom, "Taskbar", style,
+                                         0, 0, CW_USEDEFAULT,
+                                         CW_USEDEFAULT,
+                                         0, 0, self.hinst, None)
         UpdateWindow(self.hwnd)
 
         # icon
-        if icon_path is not None:
-            icon_path = path.realpath(icon_path)
-        else:
-            icon_path =  resource_filename(Requirement.parse("win10toast"), "win10toast/data/python.ico")
-        icon_flags = LR_LOADFROMFILE | LR_DEFAULTSIZE
-        try:
-            hicon = LoadImage(self.hinst, icon_path,
-                              IMAGE_ICON, 0, 0, icon_flags)
-        except Exception as e:
-            logging.error("Some trouble with the icon ({}): {}"
-                          .format(icon_path, e))
-            hicon = LoadIcon(0, IDI_APPLICATION)
+        if self.hicon is None:
+            if icon_path is not None:
+                icon_path = path.realpath(icon_path)
+            else:
+                icon_path = resource_filename(Requirement.parse("win10toast"), "win10toast/data/python.ico")
+            icon_flags = LR_LOADFROMFILE | LR_DEFAULTSIZE
+            try:
+                self.hicon = LoadImage(self.hinst, icon_path,
+                                       IMAGE_ICON, 0, 0, icon_flags)
+            except Exception as e:
+                logging.error("Some trouble with the icon ({}): {}"
+                              .format(icon_path, e))
+                self.hicon = LoadIcon(0, IDI_APPLICATION)
 
         # Taskbar icon
         flags = NIF_ICON | NIF_MESSAGE | NIF_TIP
         if self.nid is None:
-            self.nid = (self.hwnd, 0, flags, WM_USER + 20, hicon, "Tooltip")
+            self.nid = (self.hwnd, 0, flags, WM_USER + 20, self.hicon, "Tooltip")
             Shell_NotifyIcon(NIM_ADD, self.nid)
         Shell_NotifyIcon(NIM_MODIFY, (self.hwnd, 0, NIF_INFO,
                                       WM_USER + 20,
-                                      hicon, "Balloon Tooltip", msg, 200,
+                                      self.hicon, "Balloon Tooltip", msg, 200,
                                       title))
         return None
 
     def show_toast(self, title="Notification", msg="Here comes the message",
-                    icon_path=None, duration=5, threaded=False):
+                   icon_path=None, duration=5, threaded=False):
         """Notification settings.
-
         :title: notification title
         :msg: notification message
         :icon_path: path to the .ico file to custom notification
@@ -140,20 +142,19 @@ class ToastNotifier(object):
             # We have an active notification, let is finish we don't spam them
             return True
         return False
-    
+
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.destroy()
-        
+
     def destroy(self):
         DestroyWindow(self.hwnd)
         UnregisterClass(self.wc.lpszClassName, None)
 
     def on_destroy(self, hwnd, msg, wparam, lparam):
         """Clean after notification ended.
-
         :hwnd:
         :msg:
         :wparam:
@@ -164,4 +165,3 @@ class ToastNotifier(object):
         PostQuitMessage(0)
 
         return None
-
