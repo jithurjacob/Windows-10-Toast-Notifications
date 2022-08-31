@@ -1,8 +1,9 @@
-﻿from win10toast import ToastNotifier
-import time
+﻿import time
 
-# #############################################################################
-# ###### Stand alone program ########
+from win10toast import ToastNotifier
+
+# ###################################
+# ###### Standalone program #########
 # ###################################
 if __name__ == "__main__":
     # Example
@@ -17,6 +18,7 @@ if __name__ == "__main__":
         icon_path=None,
         duration=5,
         threaded=True
-        )
+    )
     # Wait for threaded notification to finish
-    while toaster.notification_active(): time.sleep(0.1)
+    while toaster.notification_active():
+        time.sleep(0.1)
