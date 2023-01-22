@@ -143,6 +143,8 @@ class ToastNotifier(object):
 
     def on_destroy(self, hwnd, msg, wparam, lparam):
         """Clean after notification ended.
+        
+        See https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-destroy#return-value
 
         :hwnd:
         :msg:
@@ -153,5 +155,5 @@ class ToastNotifier(object):
         Shell_NotifyIcon(NIM_DELETE, nid)
         PostQuitMessage(0)
 
-        return None
+        return 0
 
