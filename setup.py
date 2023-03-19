@@ -1,9 +1,20 @@
 
 from operator import attrgetter
 from os import path
-
-from pip.req import parse_requirements
 from setuptools import setup
+
+try:
+    # pip >=20
+    from pip._internal.req import parse_requirements
+except ImportError:
+    try:
+        # 10.0.0 <= pip <= 19.3.1
+        from pip._internal.req import parse_requirements
+    except ImportError:
+        # pip <= 9.0.3
+        from pip.req import parse_requirements
+
+
 
 def read(fname):
     return open(path.join(path.dirname(__file__), fname)).read()
@@ -14,7 +25,7 @@ def from_here(relative_path):
 
 
 requirements_txt = list(map(str, map(
-    attrgetter("req"),
+    attrgetter("requirement"),
     parse_requirements(from_here("requirements.txt"), session="")
 )))
 
