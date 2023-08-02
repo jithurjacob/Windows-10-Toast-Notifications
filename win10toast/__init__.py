@@ -153,5 +153,5 @@ class ToastNotifier(object):
         Shell_NotifyIcon(NIM_DELETE, nid)
         PostQuitMessage(0)
 
-        return None
+        return 0  # Error fixed (WNDPROC return value cannot be converted to LRESULT TypeError: WPARAM is simple, so must be an int object (got NoneType))
 
